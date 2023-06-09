@@ -6,7 +6,8 @@ import {
   View,
   ImageBackground,
   TextInput,
-  Button,
+  Pressable,
+  Image,
 } from "react-native";
 export default function RegistrationScreen() {
   const [text, onChangeText] = React.useState("Useless Text");
@@ -19,26 +20,45 @@ export default function RegistrationScreen() {
         resizeMode="cover"
         style={styles.image}
       >
-        <Text style={styles.text}>Реєстрація</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeText}
-          placeholder="Логін"
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeNumber}
-          placeholder="Адреса електронної пошти"
-          //  keyboardType="numeric"
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeText}
-          placeholder="Пароль"
-        />
-        <Button color="#FF6C00" style={styles.button} title="Зареєстуватися" />
-        <Text>Вже є акаунт? Увійти</Text>
+        <View style={styles.blok}>
+          <View style={styles.photo}></View>
+          <Text style={styles.title}>Реєстрація</Text>
+          <View style={styles.form}>
+            <TextInput
+              style={styles.input}
+              onChangeText={onChangeText}
+              placeholder="Логін"
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={onChangeNumber}
+              placeholder="Адреса електронної пошти"
+            />
+            <View>
+              <TextInput
+                style={styles.input}
+                onChangeText={onChangeText}
+                placeholder="Пароль"
+                secureTextEntry={true}
+              />
+              <Pressable style={styles.showPassword}>
+                <Text style={styles.texShowPassword}>Показати</Text>
+              </Pressable>
+            </View>
+
+            <Pressable style={styles.button}>
+              <Text style={styles.titleBtn}>Зареєструватися</Text>
+            </Pressable>
+          </View>
+          <Pressable>
+            <Text style={styles.text}>Вже є акаунт? Увійти</Text>
+          </Pressable>
+        </View>
       </ImageBackground>
+      <Image
+        style={styles.imageHome}
+        source={require("../assets/HomeIndicator.png")}
+      />
     </View>
   );
 }
@@ -55,26 +75,86 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
   },
+  blok: {
+    backgroundColor: "#FFFFFF",
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    paddingTop: "16%",
+    paddingBottom: "14%",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+  },
+  photo: {
+    width: 120,
+    height: 120,
+    backgroundColor: "#F6F6F6",
+    borderRadius: 16,
+    position: "absolute",
+    top: -60,
+    left: "34%",
+  },
+  form: {
+    marginHorizontal: 12,
+  },
   input: {
     height: 50,
-    margin: 12,
+    fontSize: 16,
     borderWidth: 1,
     padding: 10,
     color: "#BDBDBD",
     backgroundColor: "#F6F6F6",
+    borderColor: "#E8E8E8",
     borderRadius: 8,
     paddingLeft: 16,
     paddingRight: 16,
+    marginBottom: 16,
   },
-  text: {
+  title: {
     color: "#212121",
     fontFamily: "Roboto",
     fontSize: 30,
     fontWeight: 500,
     textAlign: "center",
+    marginBottom: 33,
+  },
+  showPassword: {
+    marginRight: 16,
+    position: "absolute",
+    right: 0,
+    top: 16,
+  },
+  texShowPassword: {
+    color: "#1B4371",
+    fontFamily: "Roboto",
+    fontSize: 16,
+    fontWeight: 400,
+    textAlign: "right",
   },
   button: {
-    //borderRadius: 100,
-    width: 100,
+    backgroundColor: "#FF6C00",
+    borderRadius: 100,
+    width: "100%",
+    height: 51,
+    marginTop: 33,
+  },
+  titleBtn: {
+    color: "#FFFFFF",
+    textAlign: "center",
+    fontFamily: "Roboto",
+    fontSize: 16,
+    fontWeight: 400,
+    paddingVertical: 16,
+  },
+  text: {
+    color: "#1B4371",
+    textAlign: "center",
+    fontFamily: "Roboto",
+    fontSize: 16,
+    fontWeight: 400,
+    paddingVertical: 16,
+  },
+  imageHome: {
+    marginBottom: 5,
   },
 });
