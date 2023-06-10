@@ -55,10 +55,6 @@ export default function RegistrationScreen() {
           </Pressable>
         </View>
       </ImageBackground>
-      <Image
-        style={styles.imageHome}
-        source={require("../assets/HomeIndicator.png")}
-      />
     </View>
   );
 }
