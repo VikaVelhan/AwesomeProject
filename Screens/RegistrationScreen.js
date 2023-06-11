@@ -1,85 +1,94 @@
-import React from "react";
-// import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
+
 import {
   StyleSheet,
   Text,
   View,
   ImageBackground,
+  TouchableOpacity,
+  Image,
   TextInput,
   Pressable,
-  Image,
+  Platform,
+  KeyboardAvoidingView,
 } from "react-native";
+
 export default function RegistrationScreen() {
-  const [text, onChangeText] = React.useState("Useless Text");
-  const [number, onChangeNumber] = React.useState("");
+  const [isShowKeybord, setIsShowKeybord] = useState(false);
 
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require("../assets/photoBG.jpg")}
-        resizeMode="cover"
-        style={styles.image}
+    <ImageBackground
+      source={require("../assets/PhotoBG.png")}
+      resizeMode="cover"
+      style={styles.background}
+    >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <View style={styles.blok}>
-          <View style={styles.photo}></View>
+        <View
+          style={{
+            ...styles.container,
+            paddingBottom: isShowKeybord ? 78 : 32,
+          }}
+        >
+          <View style={styles.photo}>
+            <TouchableOpacity>
+              <Image
+                style={styles.addPhoto}
+                source={require("../assets/images/add.png")}
+              />
+            </TouchableOpacity>
+          </View>
+
           <Text style={styles.title}>Реєстрація</Text>
           <View style={styles.form}>
             <TextInput
               style={styles.input}
-              onChangeText={onChangeText}
               placeholder="Логін"
+              onFocus={() => setIsShowKeybord(true)}
             />
             <TextInput
               style={styles.input}
-              onChangeText={onChangeNumber}
               placeholder="Адреса електронної пошти"
+              onFocus={() => setIsShowKeybord(true)}
             />
             <View>
               <TextInput
                 style={styles.input}
-                onChangeText={onChangeText}
                 placeholder="Пароль"
                 secureTextEntry={true}
+                onFocus={() => setIsShowKeybord(true)}
               />
               <Pressable style={styles.showPassword}>
                 <Text style={styles.texShowPassword}>Показати</Text>
               </Pressable>
             </View>
-
-            <Pressable style={styles.button}>
-              <Text style={styles.titleBtn}>Зареєструватися</Text>
-            </Pressable>
           </View>
+          <Pressable style={styles.button}>
+            <Text style={styles.titleBtn}>Зареєструватися</Text>
+          </Pressable>
           <Pressable>
-            <Text style={styles.text}>Вже є акаунт? Увійти</Text>
+            <Text style={styles.textLink}>Вже є аккаутн? Увійти</Text>
           </Pressable>
         </View>
-      </ImageBackground>
-    </View>
+      </KeyboardAvoidingView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    justifyContent: "flex-end",
+    width: "100%",
+  },
   container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-  },
-  image: {
-    flex: 1,
-    justifyContent: "center",
-    width: "100%",
-  },
-  blok: {
-    backgroundColor: "#FFFFFF",
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-    paddingTop: "16%",
-    paddingBottom: "14%",
+    backgroundColor: "#fff",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
+    paddingTop: 92,
+    paddingHorizontal: 16,
+    paddingBottom: 78,
   },
   photo: {
     width: 120,
@@ -88,69 +97,69 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     position: "absolute",
     top: -60,
-    left: "34%",
+    left: "38%",
   },
-  form: {
-    marginHorizontal: 12,
-  },
-  input: {
-    height: 50,
-    fontSize: 16,
-    borderWidth: 1,
-    padding: 10,
-    color: "#BDBDBD",
-    backgroundColor: "#F6F6F6",
-    borderColor: "#E8E8E8",
-    borderRadius: 8,
-    paddingLeft: 16,
-    paddingRight: 16,
-    marginBottom: 16,
+  addPhoto: {
+    left: 108,
+    top: 81,
   },
   title: {
-    color: "#212121",
+    textAlign: "center",
+    marginBottom: 33,
     fontFamily: "Roboto",
     fontSize: 30,
     fontWeight: 500,
-    textAlign: "center",
-    marginBottom: 33,
+    lineHeight: 35,
   },
-  showPassword: {
-    marginRight: 16,
-    position: "absolute",
-    right: 0,
-    top: 16,
+  form: {
+    gap: 16,
+    marginBottom: 43,
   },
-  texShowPassword: {
-    color: "#1B4371",
+  input: {
+    height: 50,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: "#E8E8E8",
+    borderRadius: 8,
+    backgroundColor: "#F6F6F6",
     fontFamily: "Roboto",
     fontSize: 16,
+    lineHeight: 19,
+  },
+
+  showPassword: {
+    position: "absolute",
+    top: 16,
+    right: 15,
+  },
+  texShowPassword: {
+    fontSize: 16,
     fontWeight: 400,
-    textAlign: "right",
+    lineHeight: 19,
+    fontFamily: "Roboto",
+    color: "#1B4371",
   },
   button: {
     backgroundColor: "#FF6C00",
     borderRadius: 100,
-    width: "100%",
-    height: 51,
-    marginTop: 33,
+    paddingVertical: 16,
+    marginBottom: 16,
   },
   titleBtn: {
+    fontSize: 16,
+    fontWeight: 400,
+    lineHeight: 19,
+    fontFamily: "Roboto",
     color: "#FFFFFF",
     textAlign: "center",
-    fontFamily: "Roboto",
-    fontSize: 16,
-    fontWeight: 400,
-    paddingVertical: 16,
   },
-  text: {
+  textLink: {
     color: "#1B4371",
-    textAlign: "center",
     fontFamily: "Roboto",
     fontSize: 16,
     fontWeight: 400,
-    paddingVertical: 16,
-  },
-  imageHome: {
-    marginBottom: 5,
+    lineHeight: 19,
+    textAlign: "center",
+    //paddingBottom: 144,
   },
 });

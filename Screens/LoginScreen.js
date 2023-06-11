@@ -1,58 +1,59 @@
-import React, { useState } from "react"; // import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
+
 import {
-  StyleSheet,
-  Text,
   View,
-  ImageBackground,
+  Text,
+  StyleSheet,
   TextInput,
   Pressable,
+  ImageBackground,
   Platform,
   KeyboardAvoidingView,
 } from "react-native";
 
 export default function LoginScreen() {
-  const [showKeybord, setShowKeybord] = useState(false);
+  const [isShowKeybord, setIsShowKeybord] = useState(false);
+
   return (
     <ImageBackground
-      source={require("../assets/photoBG.jpg")}
+      source={require("../assets/PhotoBG.png")}
       resizeMode="cover"
-      style={styles.image}
+      style={styles.background}
     >
       <KeyboardAvoidingView
-        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View
           style={{
-            ...styles.blok,
-            paddingBottom: showKeybord ? 144 : 32,
+            ...styles.container,
+            paddingBottom: isShowKeybord ? 144 : 32,
           }}
         >
+          <Text style={styles.title}>Увійти</Text>
           <View style={styles.form}>
-            <Text style={styles.title}>Увійти</Text>
             <TextInput
               style={styles.input}
               placeholder="Адреса електронної пошти"
-              onFocus={() => setShowKeybord(true)}
+              onFocus={() => setIsShowKeybord(true)}
             />
             <View>
               <TextInput
                 style={styles.input}
                 placeholder="Пароль"
                 secureTextEntry={true}
-                onFocus={() => setShowKeybord(true)}
+                onFocus={() => setIsShowKeybord(true)}
               />
               <Pressable style={styles.showPassword}>
                 <Text style={styles.texShowPassword}>Показати</Text>
               </Pressable>
             </View>
-
-            <Pressable style={styles.button}>
-              <Text style={styles.titleBtn}>Увійти</Text>
-            </Pressable>
-            <Pressable>
-              <Text style={styles.text}>Немає аккаунту? Зареєструватися</Text>
-            </Pressable>
           </View>
+          <Pressable style={styles.button}>
+            <Text style={styles.titleBtn}>Увійти</Text>
+          </Pressable>
+          <Pressable>
+            <Text style={styles.textLink}>Немає акаунту? Зареєструватися</Text>
+          </Pressable>
         </View>
       </KeyboardAvoidingView>
     </ImageBackground>
@@ -60,83 +61,76 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  image: {
+  background: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-end",
     width: "100%",
   },
-  blok: {
-    marginTop: "69%",
-    backgroundColor: "#FFFFFF",
-    position: "relative",
-    paddingTop: 32,
-    paddingBottom: 144,
+  container: {
+    backgroundColor: "#fff",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    width: 390,
-    // position: "absolute",
-    //flex: 1,
-    // justifyContent: "flex-end",
-  },
-
-  form: {
-    marginHorizontal: 16,
-  },
-  input: {
-    height: 50,
-    fontSize: 16,
-    borderWidth: 1,
-    padding: 10,
-    color: "#BDBDBD",
-    backgroundColor: "#F6F6F6",
-    borderColor: "#E8E8E8",
-    borderRadius: 8,
-
-    marginBottom: 16,
+    paddingTop: 32,
+    paddingHorizontal: 16,
+    paddingBottom: 144,
   },
   title: {
-    color: "#212121",
+    textAlign: "center",
+    marginBottom: 33,
     fontFamily: "Roboto",
     fontSize: 30,
     fontWeight: 500,
-    textAlign: "center",
-    marginBottom: 33,
+    lineHeight: 35,
   },
-  showPassword: {
-    marginRight: 16,
-    position: "absolute",
-    right: 0,
-    top: 16,
+  form: {
+    gap: 16,
+    marginBottom: 43,
   },
-  texShowPassword: {
-    color: "#1B4371",
+  input: {
+    height: 50,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: "#E8E8E8",
+    borderRadius: 8,
+    backgroundColor: "#F6F6F6",
     fontFamily: "Roboto",
     fontSize: 16,
+    lineHeight: 19,
+  },
+
+  showPassword: {
+    position: "absolute",
+    top: 16,
+    right: 15,
+  },
+  texShowPassword: {
+    fontSize: 16,
     fontWeight: 400,
-    textAlign: "right",
+    lineHeight: 19,
+    fontFamily: "Roboto",
+    color: "#1B4371",
   },
   button: {
     backgroundColor: "#FF6C00",
     borderRadius: 100,
-    width: "100%",
-    height: 51,
-    marginTop: 43,
+    paddingVertical: 16,
     marginBottom: 16,
   },
   titleBtn: {
+    fontSize: 16,
+    fontWeight: 400,
+    lineHeight: 19,
+    fontFamily: "Roboto",
     color: "#FFFFFF",
     textAlign: "center",
-    fontFamily: "Roboto",
-    fontSize: 16,
-    fontWeight: 400,
-    paddingVertical: 16,
   },
-  text: {
+  textLink: {
     color: "#1B4371",
-    textAlign: "center",
     fontFamily: "Roboto",
     fontSize: 16,
     fontWeight: 400,
+    lineHeight: 19,
+    textAlign: "center",
+    paddingBottom: 144,
   },
 });
