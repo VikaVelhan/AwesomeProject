@@ -26,7 +26,7 @@ export default function LoginScreen() {
         <View
           style={{
             ...styles.container,
-            paddingBottom: isShowKeybord ? 144 : 32,
+            paddingBottom: isShowKeybord ? 32 : 144,
           }}
         >
           <Text style={styles.title}>Увійти</Text>
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
     paddingTop: 32,
     paddingHorizontal: 16,
-    paddingBottom: 144,
+    // paddingBottom: 144,
   },
   title: {
     textAlign: "center",
@@ -131,6 +131,6 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     lineHeight: 19,
     textAlign: "center",
-    paddingBottom: 144,
+    //paddingBottom: 144,
   },
 });

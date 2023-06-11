@@ -28,7 +28,7 @@ export default function RegistrationScreen() {
         <View
           style={{
             ...styles.container,
-            paddingBottom: isShowKeybord ? 78 : 32,
+            paddingBottom: isShowKeybord ? 32 : 78,
           }}
         >
           <View style={styles.photo}>
