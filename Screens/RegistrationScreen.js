@@ -10,69 +10,97 @@ import {
   TextInput,
   Pressable,
   Platform,
+  Keyboard,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
 } from "react-native";
+
+const initialState = {
+  login: "",
+  email: "",
+  password: "",
+};
 
 export default function RegistrationScreen() {
   const [isShowKeybord, setIsShowKeybord] = useState(false);
-
+  const [state, setState] = useState(initialState);
+  const keyboardHide = () => {
+    setIsShowKeybord(false);
+    Keyboard.dismiss();
+    console.log(state);
+    setState(initialState);
+  };
   return (
-    <ImageBackground
-      source={require("../assets/PhotoBG.png")}
-      resizeMode="cover"
-      style={styles.background}
-    >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <TouchableWithoutFeedback onPress={keyboardHide}>
+      <ImageBackground
+        source={require("../assets/PhotoBG.png")}
+        resizeMode="cover"
+        style={styles.background}
       >
-        <View
-          style={{
-            ...styles.container,
-            paddingBottom: isShowKeybord ? 32 : 78,
-          }}
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
-          <View style={styles.photo}>
-            <TouchableOpacity>
-              <Image
-                style={styles.addPhoto}
-                source={require("../assets/images/add.png")}
-              />
-            </TouchableOpacity>
-          </View>
+          <View
+            style={{
+              ...styles.container,
+              paddingBottom: isShowKeybord ? 32 : 78,
+            }}
+          >
+            <View style={styles.photo}>
+              <TouchableOpacity>
+                <Image
+                  style={styles.addPhoto}
+                  source={require("../assets/images/add.png")}
+                />
+              </TouchableOpacity>
+            </View>
 
-          <Text style={styles.title}>Реєстрація</Text>
-          <View style={styles.form}>
-            <TextInput
-              style={styles.input}
-              placeholder="Логін"
-              onFocus={() => setIsShowKeybord(true)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Адреса електронної пошти"
-              onFocus={() => setIsShowKeybord(true)}
-            />
-            <View>
+            <Text style={styles.title}>Реєстрація</Text>
+            <View style={styles.form}>
               <TextInput
                 style={styles.input}
-                placeholder="Пароль"
-                secureTextEntry={true}
+                placeholder="Логін"
+                value={state.login}
                 onFocus={() => setIsShowKeybord(true)}
+                onChangeText={(value) =>
+                  setState((prevState) => ({ ...prevState, login: value }))
+                }
               />
-              <Pressable style={styles.showPassword}>
-                <Text style={styles.texShowPassword}>Показати</Text>
-              </Pressable>
+              <TextInput
+                style={styles.input}
+                placeholder="Адреса електронної пошти"
+                value={state.email}
+                onFocus={() => setIsShowKeybord(true)}
+                onChangeText={(value) =>
+                  setState((prevState) => ({ ...prevState, email: value }))
+                }
+              />
+              <View>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Пароль"
+                  value={state.password}
+                  secureTextEntry={true}
+                  onFocus={() => setIsShowKeybord(true)}
+                  onChangeText={(value) =>
+                    setState((prevState) => ({ ...prevState, password: value }))
+                  }
+                />
+                <Pressable style={styles.showPassword}>
+                  <Text style={styles.texShowPassword}>Показати</Text>
+                </Pressable>
+              </View>
             </View>
+            <Pressable style={styles.button} onPress={keyboardHide}>
+              <Text style={styles.titleBtn}>Зареєструватися</Text>
+            </Pressable>
+            <Pressable>
+              <Text style={styles.textLink}>Вже є аккаутн? Увійти</Text>
+            </Pressable>
           </View>
-          <Pressable style={styles.button}>
-            <Text style={styles.titleBtn}>Зареєструватися</Text>
-          </Pressable>
-          <Pressable>
-            <Text style={styles.textLink}>Вже є аккаутн? Увійти</Text>
-          </Pressable>
-        </View>
-      </KeyboardAvoidingView>
-    </ImageBackground>
+        </KeyboardAvoidingView>
+      </ImageBackground>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -106,9 +134,9 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     marginBottom: 33,
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     fontSize: 30,
-    fontWeight: 500,
+    fontWeight: "500",
     lineHeight: 35,
   },
   form: {
@@ -122,7 +150,7 @@ const styles = StyleSheet.create({
     borderColor: "#E8E8E8",
     borderRadius: 8,
     backgroundColor: "#F6F6F6",
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     fontSize: 16,
     lineHeight: 19,
   },
@@ -134,9 +162,9 @@ const styles = StyleSheet.create({
   },
   texShowPassword: {
     fontSize: 16,
-    fontWeight: 400,
+    fontWeight: "400",
     lineHeight: 19,
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     color: "#1B4371",
   },
   button: {
@@ -147,17 +175,17 @@ const styles = StyleSheet.create({
   },
   titleBtn: {
     fontSize: 16,
-    fontWeight: 400,
+    fontWeight: "400",
     lineHeight: 19,
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     color: "#FFFFFF",
     textAlign: "center",
   },
   textLink: {
     color: "#1B4371",
-    fontFamily: "Roboto",
+    //  fontFamily: "Roboto",
     fontSize: 16,
-    fontWeight: 400,
+    fontWeight: "400",
     lineHeight: 19,
     textAlign: "center",
     //paddingBottom: 144,

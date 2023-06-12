@@ -8,55 +8,80 @@ import {
   Pressable,
   ImageBackground,
   Platform,
+  Keyboard,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
 } from "react-native";
+
+const initialState = {
+  email: "",
+  password: "",
+};
 
 export default function LoginScreen() {
   const [isShowKeybord, setIsShowKeybord] = useState(false);
-
+  const [state, setState] = useState(initialState);
+  const keyboardHide = () => {
+    setIsShowKeybord(false);
+    Keyboard.dismiss();
+    console.log(state);
+    setState(initialState);
+  };
   return (
-    <ImageBackground
-      source={require("../assets/PhotoBG.png")}
-      resizeMode="cover"
-      style={styles.background}
-    >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <TouchableWithoutFeedback onPress={keyboardHide}>
+      <ImageBackground
+        source={require("../assets/PhotoBG.png")}
+        resizeMode="cover"
+        style={styles.background}
       >
-        <View
-          style={{
-            ...styles.container,
-            paddingBottom: isShowKeybord ? 32 : 144,
-          }}
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
-          <Text style={styles.title}>Увійти</Text>
-          <View style={styles.form}>
-            <TextInput
-              style={styles.input}
-              placeholder="Адреса електронної пошти"
-              onFocus={() => setIsShowKeybord(true)}
-            />
-            <View>
+          <View
+            style={{
+              ...styles.container,
+              paddingBottom: isShowKeybord ? 32 : 144,
+            }}
+          >
+            <Text style={styles.title}>Увійти</Text>
+            <View style={styles.form}>
               <TextInput
                 style={styles.input}
-                placeholder="Пароль"
-                secureTextEntry={true}
+                placeholder="Адреса електронної пошти"
+                value={state.email}
                 onFocus={() => setIsShowKeybord(true)}
+                onChangeText={(value) =>
+                  setState((prevState) => ({ ...prevState, email: value }))
+                }
               />
-              <Pressable style={styles.showPassword}>
-                <Text style={styles.texShowPassword}>Показати</Text>
-              </Pressable>
+              <View>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Пароль"
+                  value={state.password}
+                  secureTextEntry={true}
+                  onFocus={() => setIsShowKeybord(true)}
+                  onChangeText={(value) =>
+                    setState((prevState) => ({ ...prevState, password: value }))
+                  }
+                />
+                <Pressable style={styles.showPassword}>
+                  <Text style={styles.texShowPassword}>Показати</Text>
+                </Pressable>
+              </View>
             </View>
+            <Pressable style={styles.button} onPress={keyboardHide}>
+              <Text style={styles.titleBtn}>Увійти</Text>
+            </Pressable>
+            <Pressable>
+              <Text style={styles.textLink}>
+                Немає акаунту? Зареєструватися
+              </Text>
+            </Pressable>
           </View>
-          <Pressable style={styles.button}>
-            <Text style={styles.titleBtn}>Увійти</Text>
-          </Pressable>
-          <Pressable>
-            <Text style={styles.textLink}>Немає акаунту? Зареєструватися</Text>
-          </Pressable>
-        </View>
-      </KeyboardAvoidingView>
-    </ImageBackground>
+        </KeyboardAvoidingView>
+      </ImageBackground>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -77,9 +102,9 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     marginBottom: 33,
-    fontFamily: "Roboto",
+    //   fontFamily: "Roboto",
     fontSize: 30,
-    fontWeight: 500,
+    fontWeight: "500",
     lineHeight: 35,
   },
   form: {
@@ -93,7 +118,7 @@ const styles = StyleSheet.create({
     borderColor: "#E8E8E8",
     borderRadius: 8,
     backgroundColor: "#F6F6F6",
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     fontSize: 16,
     lineHeight: 19,
   },
@@ -105,9 +130,9 @@ const styles = StyleSheet.create({
   },
   texShowPassword: {
     fontSize: 16,
-    fontWeight: 400,
+    fontWeight: "400",
     lineHeight: 19,
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     color: "#1B4371",
   },
   button: {
@@ -118,17 +143,17 @@ const styles = StyleSheet.create({
   },
   titleBtn: {
     fontSize: 16,
-    fontWeight: 400,
+    fontWeight: "400",
     lineHeight: 19,
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     color: "#FFFFFF",
     textAlign: "center",
   },
   textLink: {
     color: "#1B4371",
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     fontSize: 16,
-    fontWeight: 400,
+    fontWeight: "400",
     lineHeight: 19,
     textAlign: "center",
     //paddingBottom: 144,
