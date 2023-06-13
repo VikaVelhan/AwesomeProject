@@ -10,7 +10,7 @@ export default function ImageViewer({ selectedImage, onPress, onDelete }) {
 
   return (
     <View style={styles.photo}>
-      {imageSource && <Image style={styles.imageStyle} source={imageSource} />}
+      {imageSource && <Image style={styles.photoStyle} source={imageSource} />}
       {selectedImage !== null ? (
         <TouchableOpacity style={styles.delPhoto} onPress={handleDelete}>
           <Image source={require("../assets/images/del.png")} />
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     left: "38%",
     top: -60,
   },
-  imageStyle: {
+  photoStyle: {
     width: 120,
     height: 120,
     backgroundColor: "#F6F6F6",
