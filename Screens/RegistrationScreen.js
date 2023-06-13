@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import {
   StyleSheet,
   Text,
@@ -14,6 +13,8 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import ImageViewer from "../components/ImageViewer.js";
 
 const initialState = {
   login: "",
@@ -24,11 +25,28 @@ const initialState = {
 export default function RegistrationScreen() {
   const [isShowKeybord, setIsShowKeybord] = useState(false);
   const [state, setState] = useState(initialState);
+  const [selectedImage, setSelectedImage] = useState(null);
   const keyboardHide = () => {
     setIsShowKeybord(false);
     Keyboard.dismiss();
     console.log(state);
     setState(initialState);
+  };
+  const pickImageAsync = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+      console.log(result.assets[0]);
+    } else {
+      alert("You did not select any image.");
+    }
+  };
+  const handleDeleteImage = () => {
+    setSelectedImage(null);
   };
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
@@ -46,15 +64,11 @@ export default function RegistrationScreen() {
               paddingBottom: isShowKeybord ? 32 : 78,
             }}
           >
-            <View style={styles.photo}>
-              <TouchableOpacity>
-                <Image
-                  style={styles.addPhoto}
-                  source={require("../assets/images/add.png")}
-                />
-              </TouchableOpacity>
-            </View>
-
+            <ImageViewer
+              selectedImage={selectedImage}
+              onPress={pickImageAsync}
+              onDelete={handleDeleteImage}
+            />
             <Text style={styles.title}>Реєстрація</Text>
             <View style={styles.form}>
               <TextInput
@@ -118,19 +132,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 78,
   },
-  photo: {
-    width: 120,
-    height: 120,
-    backgroundColor: "#F6F6F6",
-    borderRadius: 16,
-    position: "absolute",
-    top: -60,
-    left: "38%",
-  },
-  addPhoto: {
-    left: 108,
-    top: 81,
-  },
+
   title: {
     textAlign: "center",
     marginBottom: 33,
